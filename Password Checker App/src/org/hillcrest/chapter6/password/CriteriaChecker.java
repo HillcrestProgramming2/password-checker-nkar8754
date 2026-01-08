@@ -2,16 +2,23 @@ package org.hillcrest.chapter6.password;
 
 public class CriteriaChecker {
     //utility class
+    private static boolean meetsLength;
+    private static boolean hasUpperCase;
+    private static boolean hasLowerCase;
+    private static boolean hasDigit;
+    private static boolean hasSpecialChar;
     public static int evaluateCriteria(String password) {
         int criteriaCounter = 0;
-        boolean hasUpperCase = false;
-        boolean hasLowerCase = false;
-        boolean hasDigit = false;
+        meetsLength = false;
+        hasUpperCase = false;
+        hasLowerCase = false;
+        hasDigit = false;
         String validSpecialChar = "!@#$%^&*()-+=";
-        boolean hasSpecialChar = false;
+        hasSpecialChar = false;
 
         if (password.length() >= 8){
-            criteriaCounter += 1;
+            meetsLength = true;
+            criteriaCounter ++;
         }
         for (int i = 1; i <= password.length(); i++) {
             char ch = password.charAt(i);
@@ -65,4 +72,25 @@ public class CriteriaChecker {
             default -> "Invalid Score";
         };
     }
+
+    public static boolean isMeetsLength() {
+        return meetsLength;
+    }
+
+    public static boolean isHasUpperCase() {
+        return hasUpperCase;
+    }
+
+    public static boolean isHasLowerCase() {
+        return hasLowerCase;
+    }
+
+    public static boolean isHasDigit() {
+        return hasDigit;
+    }
+
+    public static boolean isHasSpecialChar() {
+        return hasSpecialChar;
+    }
+
 }
