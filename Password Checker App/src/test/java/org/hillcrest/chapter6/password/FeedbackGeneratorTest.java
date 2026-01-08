@@ -1,6 +1,4 @@
-package org.hillcrest.chapter6.password;
-
-import static org.junit.jupiter.api.Assertions.*;
+package java.org.hillcrest.chapter6.password;
 
 public class FeedbackGeneratorTest {
 
