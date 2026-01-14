@@ -1,6 +1,9 @@
 package org.hillcrest.chapter6.password;
 import java.util.Scanner;
 
+/**
+ * App Class that runs the main program
+ */
 public class PasswordCheckerApp {
     //main method goes here
     //prompt user for password
