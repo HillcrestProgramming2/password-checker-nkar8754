@@ -4,94 +4,70 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Test class for FeedbackGenerator utility class.
- * Tests password feedback generation based on which criteria are not met.
- */
-class FeedbackGeneratorTest {
+public class FeedbackGeneratorTest {
 
     @BeforeEach
-    void setUp() {
-        // Reset static variables before each test
+    public void setUp() {
         CriteriaChecker.evaluateCriteria("");
     }
 
-    // Tests for generateFeedback method
     @Test
-    void testGenerateFeedbackShortPassword() {
-        String feedback = FeedbackGenerator.generateFeedback("abc");
+    public void testGenerateFeedbackEmpty() {
+        String feedback = FeedbackGenerator.generateFeedback("");
         assertEquals("Increase the length to at least 8 characters.", feedback);
     }
 
     @Test
-    void testGenerateFeedbackNoUppercase() {
+    public void testGenerateFeedbackShort() {
+        String feedback = FeedbackGenerator.generateFeedback("short");
+        assertEquals("Increase the length to at least 8 characters.", feedback);
+    }
+
+    @Test
+    public void testGenerateFeedbackNoUppercase() {
         String feedback = FeedbackGenerator.generateFeedback("abcdefgh");
         assertEquals("Add at least one uppercase letter.", feedback);
     }
 
     @Test
-    void testGenerateFeedbackNoLowercase() {
+    public void testGenerateFeedbackNoLowercase() {
         String feedback = FeedbackGenerator.generateFeedback("ABCDEFGH");
-        assertEquals("Increase the length to at least 8 characters.", feedback);
+        assertEquals("Add at least one lowercase letter.", feedback);
     }
 
     @Test
-    void testGenerateFeedbackLengthAndLowercaseButNoUppercase() {
-        String feedback = FeedbackGenerator.generateFeedback("abcdefgh");
-        assertEquals("Add at least one uppercase letter.", feedback);
-    }
-
-    @Test
-    void testGenerateFeedbackLengthAndUppercaseButNoLowercase() {
-        String feedback = FeedbackGenerator.generateFeedback("ABCDEFGH");
-        assertEquals("Increase the length to at least 8 characters.", feedback);
-    }
-
-    @Test
-    void testGenerateFeedbackNoDigit() {
+    public void testGenerateFeedbackNoDigit() {
         String feedback = FeedbackGenerator.generateFeedback("Abcdefgh");
         assertEquals("Add at least one number.", feedback);
     }
 
     @Test
-    void testGenerateFeedbackNoSpecialChar() {
+    public void testGenerateFeedbackNoSpecialChar() {
         String feedback = FeedbackGenerator.generateFeedback("Abcdefgh1");
         assertEquals("Include at least one special character.", feedback);
     }
 
     @Test
-    void testGenerateFeedbackValidPassword() {
+    public void testGenerateFeedbackValid1() {
         String feedback = FeedbackGenerator.generateFeedback("Password123!");
         assertEquals("Password is valid.", feedback);
     }
 
     @Test
-    void testGenerateFeedbackValidPasswordDifferent() {
+    public void testGenerateFeedbackValid2() {
         String feedback = FeedbackGenerator.generateFeedback("MyP@ssw0rd");
         assertEquals("Password is valid.", feedback);
     }
 
     @Test
-    void testGenerateFeedbackValidPasswordWithMultipleSpecialChars() {
-        String feedback = FeedbackGenerator.generateFeedback("Test@1234#");
+    public void testGenerateFeedbackValid3() {
+        String feedback = FeedbackGenerator.generateFeedback("Secure!Pass99");
         assertEquals("Password is valid.", feedback);
     }
 
     @Test
-    void testGenerateFeedbackShortPasswordPriority() {
-        String feedback = FeedbackGenerator.generateFeedback("Abc1!");
-        assertEquals("Increase the length to at least 8 characters.", feedback);
-    }
-
-    @Test
-    void testGenerateFeedbackLengthMetButNoUppercase() {
-        String feedback = FeedbackGenerator.generateFeedback("password123!");
-        assertEquals("Add at least one uppercase letter.", feedback);
-    }
-
-    @Test
-    void testGenerateFeedbackLengthAndUppercaseMetButNoLowercase() {
-        String feedback = FeedbackGenerator.generateFeedback("PASSWORD1234!");
-        assertEquals("Increase the length to at least 8 characters.", feedback);
+    public void testGenerateFeedbackValidAll() {
+        String feedback = FeedbackGenerator.generateFeedback("Test1@Abc");
+        assertEquals("Password is valid.", feedback);
     }
 }

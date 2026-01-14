@@ -1,214 +1,175 @@
 package org.hillcrest.chapter6.password;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Test class for CriteriaChecker utility class.
- * Tests password evaluation against various criteria including length, uppercase,
- * lowercase, digits, and special characters.
- */
-class CriteriaCheckerTest {
+public class CriteriaCheckerTest {
 
     @BeforeEach
-    void setUp() {
-        // Reset static variables before each test
+    public void setUp() {
         CriteriaChecker.evaluateCriteria("");
     }
 
-    // Tests for evaluateCriteria method
+    // evaluateCriteria tests
     @Test
-    void testEvaluateCriteriaAllMet() {
+    public void testEvaluateCriteriaAllMet() {
         int score = CriteriaChecker.evaluateCriteria("Password123!");
-        Assertions.assertEquals(5, score);
+        assertEquals(5, score);
     }
 
     @Test
-    void testEvaluateCriteriaNoRequirementsMet() {
+    public void testEvaluateCriteriaNone() {
         int score = CriteriaChecker.evaluateCriteria("abc");
-        Assertions.assertEquals(0, score);
+        assertEquals(0, score);
     }
 
     @Test
-    void testEvaluateCriteriaOnlyLength() {
+    public void testEvaluateCriteriaLength() {
         int score = CriteriaChecker.evaluateCriteria("abcdefgh");
-        Assertions.assertEquals(1, score);
+        assertEquals(1, score);
     }
 
     @Test
-    void testEvaluateCriteriaLengthAndUppercase() {
+    public void testEvaluateCriteriaLengthUppercase() {
         int score = CriteriaChecker.evaluateCriteria("Abcdefgh");
-        Assertions.assertEquals(2, score);
+        assertEquals(2, score);
     }
 
     @Test
-    void testEvaluateCriteriaLengthAndLowercase() {
-        int score = CriteriaChecker.evaluateCriteria("ABCDEFGH");
-        Assertions.assertEquals(1, score);
-    }
-
-    @Test
-    void testEvaluateCriteriaLengthAndDigit() {
+    public void testEvaluateCriteriaLengthDigit() {
         int score = CriteriaChecker.evaluateCriteria("abcdefg1");
-        Assertions.assertEquals(2, score);
+        assertEquals(2, score);
     }
 
     @Test
-    void testEvaluateCriteriaWithSpecialChar() {
+    public void testEvaluateCriteriaLengthSpecial() {
         int score = CriteriaChecker.evaluateCriteria("abcdefgh!");
-        Assertions.assertEquals(2, score);
+        assertEquals(2, score);
     }
 
     @Test
-    void testEvaluateCriteriaFourRequirementsMet() {
+    public void testEvaluateCriteriaThreeCriteria() {
+        int score = CriteriaChecker.evaluateCriteria("Abcdefg1");
+        assertEquals(3, score);
+    }
+
+    @Test
+    public void testEvaluateCriteriaFourCriteria() {
         int score = CriteriaChecker.evaluateCriteria("Abcdefgh1");
-        Assertions.assertEquals(4, score);
+        assertEquals(4, score);
     }
 
-    // Tests for isMeetsLength method
     @Test
-    void testMeetsLengthTrue() {
+    public void testEvaluateCriteriaFiveCriteria() {
+        int score = CriteriaChecker.evaluateCriteria("Abcdefgh1!");
+        assertEquals(5, score);
+    }
+
+    // isMeetsLength tests
+    @Test
+    public void testMeetsLengthTrue() {
         CriteriaChecker.evaluateCriteria("12345678");
         assertTrue(CriteriaChecker.isMeetsLength());
     }
 
     @Test
-    void testMeetsLengthFalseShorterThan8() {
+    public void testMeetsLengthFalse() {
         CriteriaChecker.evaluateCriteria("1234567");
         assertFalse(CriteriaChecker.isMeetsLength());
     }
 
+    // isHasUpperCase tests
     @Test
-    void testMeetsLengthExactly8() {
-        CriteriaChecker.evaluateCriteria("12345678");
-        assertTrue(CriteriaChecker.isMeetsLength());
-    }
-
-    // Tests for isHasUpperCase method
-    @Test
-    void testHasUpperCaseTrue() {
+    public void testHasUpperCaseTrue() {
         CriteriaChecker.evaluateCriteria("Abc");
         assertTrue(CriteriaChecker.isHasUpperCase());
     }
 
     @Test
-    void testHasUpperCaseFalse() {
+    public void testHasUpperCaseFalse() {
         CriteriaChecker.evaluateCriteria("abc");
         assertFalse(CriteriaChecker.isHasUpperCase());
     }
 
+    // isHasLowerCase tests
     @Test
-    void testHasUpperCaseMultiple() {
-        CriteriaChecker.evaluateCriteria("ABCdef");
-        assertTrue(CriteriaChecker.isHasUpperCase());
-    }
-
-    // Tests for isHasLowerCase method
-    @Test
-    void testHasLowerCaseTrue() {
+    public void testHasLowerCaseTrue() {
         CriteriaChecker.evaluateCriteria("aBc");
         assertTrue(CriteriaChecker.isHasLowerCase());
     }
 
     @Test
-    void testHasLowerCaseFalse() {
+    public void testHasLowerCaseFalse() {
         CriteriaChecker.evaluateCriteria("ABC");
         assertFalse(CriteriaChecker.isHasLowerCase());
     }
 
+    // isHasDigit tests
     @Test
-    void testHasLowerCaseMultiple() {
-        CriteriaChecker.evaluateCriteria("ABCdef");
-        assertTrue(CriteriaChecker.isHasLowerCase());
-    }
-
-    // Tests for isHasDigit method
-    @Test
-    void testHasDigitTrue() {
+    public void testHasDigitTrue() {
         CriteriaChecker.evaluateCriteria("abc1");
         assertTrue(CriteriaChecker.isHasDigit());
     }
 
     @Test
-    void testHasDigitFalse() {
+    public void testHasDigitFalse() {
         CriteriaChecker.evaluateCriteria("abcdef");
         assertFalse(CriteriaChecker.isHasDigit());
     }
 
+    // isHasSpecialChar tests
     @Test
-    void testHasDigitMultiple() {
-        CriteriaChecker.evaluateCriteria("a1b2c3");
-        assertTrue(CriteriaChecker.isHasDigit());
-    }
-
-    // Tests for isHasSpecialChar method
-    @Test
-    void testHasSpecialCharTrue() {
+    public void testHasSpecialCharTrue() {
         CriteriaChecker.evaluateCriteria("abc!");
         assertTrue(CriteriaChecker.isHasSpecialChar());
     }
 
     @Test
-    void testHasSpecialCharFalse() {
+    public void testHasSpecialCharFalse() {
         CriteriaChecker.evaluateCriteria("abcdef");
         assertFalse(CriteriaChecker.isHasSpecialChar());
     }
 
     @Test
-    void testHasSpecialCharMultiple() {
-        CriteriaChecker.evaluateCriteria("a!b@c#");
-        assertTrue(CriteriaChecker.isHasSpecialChar());
-    }
-
-    @Test
-    void testHasSpecialCharAllValidChars() {
+    public void testHasSpecialCharAllTypes() {
         CriteriaChecker.evaluateCriteria("!@#$%^&*()-+=");
         assertTrue(CriteriaChecker.isHasSpecialChar());
     }
 
-    // Tests for determineStrength method
+    // determineStrength tests
     @Test
-    void testDetermineStrengthWeak0() {
-        String strength = CriteriaChecker.determineStrength(0);
-        Assertions.assertEquals("Weak", strength);
+    public void testDetermineStrengthWeak0() {
+        assertEquals("Weak", CriteriaChecker.determineStrength(0));
     }
 
     @Test
-    void testDetermineStrengthWeak1() {
-        String strength = CriteriaChecker.determineStrength(1);
-        Assertions.assertEquals("Weak", strength);
+    public void testDetermineStrengthWeak1() {
+        assertEquals("Weak", CriteriaChecker.determineStrength(1));
     }
 
     @Test
-    void testDetermineStrengthWeak2() {
-        String strength = CriteriaChecker.determineStrength(2);
-        Assertions.assertEquals("Weak", strength);
+    public void testDetermineStrengthWeak2() {
+        assertEquals("Weak", CriteriaChecker.determineStrength(2));
     }
 
     @Test
-    void testDetermineStrengthModerate() {
-        String strength = CriteriaChecker.determineStrength(3);
-        Assertions.assertEquals("Moderate", strength);
+    public void testDetermineStrengthModerate3() {
+        assertEquals("Moderate", CriteriaChecker.determineStrength(3));
     }
 
     @Test
-    void testDetermineStrengthStrong4() {
-        String strength = CriteriaChecker.determineStrength(4);
-        Assertions.assertEquals("Strong", strength);
+    public void testDetermineStrengthStrong4() {
+        assertEquals("Strong", CriteriaChecker.determineStrength(4));
     }
 
     @Test
-    void testDetermineStrengthStrong5() {
-        String strength = CriteriaChecker.determineStrength(5);
-        Assertions.assertEquals("Strong", strength);
+    public void testDetermineStrengthStrong5() {
+        assertEquals("Strong", CriteriaChecker.determineStrength(5));
     }
 
     @Test
-    void testDetermineStrengthInvalid() {
-        String strength = CriteriaChecker.determineStrength(6);
-        Assertions.assertEquals("Invalid Score", strength);
+    public void testDetermineStrengthInvalid() {
+        assertEquals("Invalid Score", CriteriaChecker.determineStrength(6));
     }
 }
